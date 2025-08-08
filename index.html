@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Raksha Bandhan</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      color: #6a0572;
+      overflow-x: hidden;
+      background: black;
+    }
+
+    .card {
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      margin: 40px auto;
+      padding: 30px;
+      max-width: 800px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 3em;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    p {
+      font-size: 1.3em;
+      margin: 20px auto;
+      max-width: 700px;
+      animation: slideUp 2s ease-in-out;
+    }
+
+    img {
+      width: 300px;
+      border-radius: 20px;
+      margin: 20px auto;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      animation: zoomIn 2s ease-in-out;
+    }
+
+    video {
+      margin-top: 30px;
+      width: 90%;
+      max-width: 560px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fireworks background -->
+  <canvas id="fireworks"></canvas>
+
+  <div class="card">
+    <h1>🌸 Happy Raksha Bandhan 🌸</h1>
+
+    <!-- Local Image -->
+    <img src="rakhi.png" alt="Rakhi Image">
+
+    <p>
+      On this special day..,<br>
+      Here's my warmest wishes for your happiness, prosperity and success!<br>
+      "May this Raksha Bandhan bring you all the happiness and love in the world"..<br><br>
+      ❤️ Wishing you a very Happy Raksha Bandhan!" ❤️<br><br>
+      🌟 Stay blessed, happy and always smiling 🌟<br><br>
+      👭 Happy Rakhi once again! 👬
+    </p>
+
+    <!-- Local Video -->
+    <video controls>
+      <source src="rakhi.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Optional background music -->
+  <audio autoplay loop>
+    <source src="rakhi.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Fireworks animation -->
+  <script>
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const fireworks = [];
+
+    function Firework() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height / 2;
+      this.radius = Math.random() * 2 + 1;
+      this.color = 'hsl(' + Math.random() * 360 + ', 100%, 60%)';
+      this.alpha = 1;
+      this.fade = Math.random() * 0.03 + 0.01;
+    }
+
+    Firework.prototype.draw = function () {
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+      ctx.restore();
+    };
+
+    Firework.prototype.update = function () {
+      this.alpha -= this.fade;
+    };
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (Math.random() < 0.1) {
+        for (let i = 0; i < 20; i++) {
+          fireworks.push(new Firework());
+        }
+      }
+
+      for (let i = fireworks.length - 1; i >= 0; i--) {
+        fireworks[i].update();
+        if (fireworks[i].alpha <= 0) {
+          fireworks.splice(i, 1);
+        } else {
+          fireworks[i].draw();
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+</body>
+</html>
